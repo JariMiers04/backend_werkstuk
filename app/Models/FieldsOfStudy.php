@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class FieldsOfStudy extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "name",
+        "year"
+    ];
+
+    public function course(){
+        return $this->belongsToMany(Course::class);
+    }
 }

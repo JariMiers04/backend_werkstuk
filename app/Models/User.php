@@ -23,7 +23,7 @@ class User extends Authenticatable
     ];
 
     public function coursesFos(){
-        return $this->belongsTo(CousesFos::class);
+        return $this->belongsTo(CoursesFos::class);
     }
 
     public function nonAvailability(){
