@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use function GuzzleHttp\Promise\all;
 
 class UserController extends Controller
 {
@@ -33,18 +34,44 @@ class UserController extends Controller
             "email" => $request->email,
             "password" => Hash::make($request->password)
         ]);
+
+//        check if new user is an admin
+        $request->has("adminUser") ? $user->assignRole("admin") : $user->assignRole("teacher");
+
+        return redirect()->route("users", ["users"=> User::all()]);
     }
 
 
 //    Update an User
 
     public function updateUser(Request $request){
+        $password = $request->password;
 
+//        input password validation
+        if($password == ""){
+            $request->validate([
+                "name" => "required|string|max:25"
+            ]);
+        } else{
+            $request->validate([
+                "name" => "required|string|max:25",
+                "password" =>  "required|string|min:8|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/|
+               confirmed"
+            ]);
+        }
+
+        return redirect()->route('profile');
     }
 
 //    delete user
 
 public function deleteUser(Request $request){
+
+}
+
+//  update nonAvailabilities
+
+public function updateNonAvailabilities(Request $request){
 
 }
 

@@ -45,6 +45,9 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
+                        <x-dropdown-link :href="route('profile')">
+                            {{ __('My Profile') }}
+                        </x-dropdown-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -76,6 +79,15 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('getUser')" :active="request()->routeIs('getUser')">
+                {{ __('Teachers') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('addUser')" :active="request()->routeIs('addUser')">
+                {{ __('Add Teacher') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('getCourses')" :active="request()->routeIs('getCourses')">
+                {{ __('Courses and Fields of Study') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -87,6 +99,9 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
+                <x-responsive-nav-link :href="route('profile')">
+                    {{ __('My Profile') }}
+                </x-responsive-nav-link>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 

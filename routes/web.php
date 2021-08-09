@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DayController;
 use App\Http\Controllers\FieldsOfStudyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,17 @@ Route::group(['middleware' => 'auth'], function () {
 
 //   add a block
     Route::post("/addBlock", [BlockController::class, 'addBlock'])->name("addBlock");
+
+//    delete a block
+    Route::post('/deleteBlock', [BlockController::class, "deleteBlock"])->name("deleteBlock");
+
+
+    //    profile page
+    Route::get("/profile", [DayController::class, "getDaysAndNonAvailabilities"])->name("profile");
+
+    Route::name("profile")->group(function (){
+        Route::post('/updateNonAvailabilities', [UserController::class, "updateNonAvailabilities"])->name("updateNonAvailabilities");
+    });
 
 });
 
