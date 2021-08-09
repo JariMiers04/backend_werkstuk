@@ -13,8 +13,18 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Timetable') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('getUser')" :active="request()->routeIs('getUser')">
+                        {{ __('Teachers') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('addUser')" :active="request()->routeIs('addUser')">
+                        {{ __('Add Teacher') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('getCourses')" :active="request()->routeIs('getCourses')">
+                        {{ __('Courses and Fields of Study') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
