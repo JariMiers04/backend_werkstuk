@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFieldsOfStudysTable extends Migration
+class CreateFieldsOfStudiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFieldsOfStudysTable extends Migration
      */
     public function up()
     {
-        Schema::create('fields_of_studys', function (Blueprint $table) {
+        Schema::create('fields_of_studies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('year');
