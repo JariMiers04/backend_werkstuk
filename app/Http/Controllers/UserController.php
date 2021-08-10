@@ -66,7 +66,13 @@ class UserController extends Controller
 //    delete user
 
 public function deleteUser(Request $request){
+    $deleteUserId = $request->idkyet;
+    $user = User::find($deleteUserId);
 
+//    verder afwerken
+
+
+    return redirect()->route("users", ["users" => User::all()]);
 }
 
 //  update nonAvailabilities
