@@ -43,9 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     //    profile page
     Route::get("/profile", [DayController::class, "getDaysAndNonAvailabilities"])->name("profile");
 
-    Route::name("profile")->group(function (){
-        Route::post('/updateNonAvailabilities', [UserController::class, "updateNonAvailabilities"])->name("updateNonAvailabilities");
-    });
+    Route::post('/updateNonAvailabilities', [UserController::class, "updateNonAvailabilities"])->name("updateNonAvailabilities");
 
 });
 
@@ -54,6 +52,9 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(["prefix" => 'users', 'middleware' => 'auth'], function () {
 //    get
     Route::get("/", [UserController::class, "getUser"])->name("getUser");
+
+//    add user as admin
+    Route::view("/addUserAdmin", "auth/register")->name("addUserAdmin");
 //    new
     Route::post("/register", [UserController::class, "addUser"])->name('addUser');
 //    update

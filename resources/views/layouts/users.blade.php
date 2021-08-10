@@ -12,8 +12,9 @@
                     <table class="text-center mx-auto">
                         <thead>
                         <th>ID</th>
-                        <th>NAAM</th>
+                        <th>NAME</th>
                         <th>EMAIL</th>
+                        <th>DELETE</th>
                         </thead>
                         <tbody>
                         @foreach($users as $user)
@@ -21,13 +22,15 @@
                         <td class="py-2 px-12 border-b-2 border-gray-300">{{$user->id}}</td>
                         <td class="py-2 px-12 border-b-2 border-gray-300">{{$user->name}}</td>
                         <td class="py-2 px-12 border-b-2 border-gray-300">{{$user->email}}</td>
-                            </tr>
+
                             @can("manageAllData")
-                                <form action="" method="POST">
-                                    <button class="text-red-700 font-bold" value="{{$user->id}}">Delete</button>
+                                <form action="deleteUser" method="POST">
+                                    @csrf
+                                    <td class="py-2 px-12 border-b-2 border-gray-300"><x-button class="text-white font-bold 2xl bg-red-700" value="{{$user->id}}">Delete</x-button></td>
                                 </form>
                             @endcan
                         @endforeach
+                            </tr>
                         </tbody>
                     </table>
                 </div>

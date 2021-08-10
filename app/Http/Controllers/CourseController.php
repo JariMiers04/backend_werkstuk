@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Day;
+use App\Models\FieldsOfStudy;
+use App\Models\Time;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -11,8 +15,12 @@ class CourseController extends Controller
 
     public function getCourses(){
         $courses = Course::all();
+        $fieldOfStudy = FieldsOfStudy::all();
+        $users = User::all();
+        $days = Day::all();
+        $times = Time::all();
 
-        return view("layouts.courseAndFieldOfStudy", ["courses" => $courses]);
+        return view("layouts.courseAndFieldOfStudy", ["courses" => $courses, "fieldOfStudy" => $fieldOfStudy, "users"=>$users, "days"=>$days, "times"=>$times]);
     }
 
     // add a course

@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('getUser')" :active="request()->routeIs('getUser')">
                         {{ __('Teachers') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('addUser')" :active="request()->routeIs('addUser')">
+                    <x-nav-link :href="route('addUserAdmin')" :active="request()->routeIs('addUserAdmin')">
                         {{ __('Add Teacher') }}
                     </x-nav-link>
                     <x-nav-link :href="route('getCourses')" :active="request()->routeIs('getCourses')">
@@ -82,7 +82,7 @@
             <x-responsive-nav-link :href="route('getUser')" :active="request()->routeIs('getUser')">
                 {{ __('Teachers') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('addUser')" :active="request()->routeIs('addUser')">
+            <x-responsive-nav-link :href="route('addUserAdmin')" :active="request()->routeIs('addUserAdmin')">
                 {{ __('Add Teacher') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('getCourses')" :active="request()->routeIs('getCourses')">

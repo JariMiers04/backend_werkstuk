@@ -11,7 +11,8 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h2 class="text-left mb-2 font-bold">Update your name, password or email</h2>
 {{--                    for form layout -> https://www.youtube.com/watch?v=XVxyY_owL_M&ab_channel=LaravelDaily see 3:54--}}
-                    <form action="{{route("addCourse")}}" method="POST">
+                    <x-auth-validation-errors class="mb-4" :errors="$errors"/>
+                    <form action="{{route("updateUser")}}" method="POST">
                         @csrf
                         <div class="grid grid-cols-2 gap-6">
                             <div class="grid grid-rows-2 gap-6">
@@ -40,6 +41,31 @@
                                 {{__("Update")}}
                             </x-button>
                         </div>
+                    </form>
+                        <br>
+                    <h2 class="text-left mb-2 font-bold">Your availabilities</h2>
+
+                    <form action="{{route("updateNonAvailabilities")}}" method="POST">
+                        @csrf
+                        <table class="mx-auto">
+                            <thead>
+                            @foreach($days as $day)
+                            <th class="px-12">{{$day->name}}</th>
+                            </thead>
+                            @endforeach
+                            <tbody>
+                            @for($i=0; i<8; $i++)
+                                <tr class="allign-center">
+                                    <td class="py-2 px-12 border-b-2 border-gray-300"></td>
+                                    <td class="py-2 px-12 border-b-2 border-gray-300"></td>
+                                    <td class="py-2 px-12 border-b-2 border-gray-300"></td>
+                                    <td class="py-2 px-12 border-b-2 border-gray-300"></td>
+                                    <td class="py-2 px-12 border-b-2 border-gray-300"></td>
+                                </tr>
+
+                            @endfor
+                            </tbody>
+                        </table>
                     </form>
                 </div>
             </div>

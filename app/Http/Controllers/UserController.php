@@ -79,6 +79,7 @@ public function deleteUser(Request $request){
 
 public function updateNonAvailabilities(Request $request){
 
+        return redirect()->route("profile");
 }
 
 
