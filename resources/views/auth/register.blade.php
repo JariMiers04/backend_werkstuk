@@ -8,8 +8,9 @@
 
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        @can("manageAllData")
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('addUser') }}">
             @csrf
 
             <!-- Name -->
@@ -45,6 +46,12 @@
                                 name="password_confirmation" required />
             </div>
 
+                <!-- is User admin -->
+                <div class="mt-4">
+                    <label for="userAdmin">Are you an Admin?</label>
+                        <x-input type="checkbox" name="userAdmin" id="userAdmin"></x-input>
+                </div>
+
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
@@ -55,5 +62,6 @@
                 </x-button>
             </div>
         </form>
+        @endcan
     </x-auth-card>
 </x-guest-layout>

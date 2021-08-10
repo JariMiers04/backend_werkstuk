@@ -23,8 +23,9 @@ class UserController extends Controller
         $request->validate([
             "name" => 'required|string|max:25',
             "email" => "required|email|max:50",
-            "password" => "required|string|min:8|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/|
-               confirmed",
+            "password" => "required|string|min:8|confirmed",
+
+//|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/
 //            maybe password confirmation
         ]);
 
@@ -38,7 +39,7 @@ class UserController extends Controller
 //        check if new user is an admin
         $request->has("adminUser") ? $user->assignRole("admin") : $user->assignRole("teacher");
 
-        return redirect()->route("users", ["users"=> User::all()]);
+        return redirect()->route("getUser");
     }
 
 
