@@ -35,13 +35,17 @@
                                 </div>
 
                                 <div>
-                                    <x-label for="year" value="Select year of field of study"></x-label>
-                                    <x-input type="number" min="1" max="7" name="year" class="rounded"></x-input>
+                                    <x-label for="fieldsOfStudyYear" value="Select year of field of study"></x-label>
+                                    <select name="fieldsOfStudyYear" id="fieldsOfStudyYear" value="" class="w-full rounded">
+                                        @for($i=1;$i<=7;$i++)
+                                            <option value="{{$i}}">Year {{$i}}</option>
+                                        @endfor
+                                    </select>
                                 </div>
 
                                 <div>
                                     <x-label for="courses" value="Select Course"></x-label>
-                                    <select name="courses" id="courses" value="" class="rounded">
+                                    <select name="courses" id="courses" value="" class="w-full rounded">
                                     @foreach($courses as $course)
                                         <option value="{{$course->id}}">{{$course->name}}</option>
                                     @endforeach
@@ -50,7 +54,7 @@
 
                                 <div>
                                     <x-label for="days" value="Select Day"></x-label>
-                                    <select name="days" id="days" value="" class="rounded">
+                                    <select name="days" id="days" value="" class="w-full rounded">
                                     @foreach($days as $day)
                                         <option value="{{$day->id}}">{{$day->name}}</option>
                                     @endforeach
@@ -58,25 +62,22 @@
                                 </div>
 
                                 <div>
-                                    <x-label for="start_time" value="Select start hour"></x-label>
-                                    <select name="start_time" id="start_time" value="" class="rounded">
-                                    @foreach($times as $time)
-                                        <option value="{{$time->id}}">{{$time->start_time}}</option>
-                                    @endforeach
+                                    <x-label for="times" value="Select which hour"></x-label>
+                                    <select name="times" id="times" value="" class="w-full rounded">
+{{--                                    @for($i=1;$i<=8;$i++)--}}
+                                        @foreach($times as $time)
+                                        <option value="{{$time->id}}">Class Block {{$time->id}}</option>
+                                            @endforeach
+{{--                                    @endfor--}}
                                     </select>
                                 </div>
-
                                 <div>
-                                    <x-label for="end_time" value="Select end hour"></x-label>
-                                    <select name="end_time" id="end_time" value="" class="rounded">
-                                    @foreach($times as $time)
-                                        <option value="{{$time->id}}">{{$time->end_time}}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
+                                <x-label for="year" value="Year"></x-label>
+                                <x-input id="year" type="integer" name="year" class="w-full rounded"></x-input>
+                                 </div>
                                 <div class="flex items-center justify-end mt-4">
                             <x-button class="ml-3">
-                                {{__("Save")}}
+                                {{__("Create new block")}}
                             </x-button>
                             </div>
                         </form>
@@ -85,7 +86,7 @@
                         <form action="{{route('addCourse')}}" method="POST">
                             @csrf
                             <x-label for="course" value="Name of the new course"></x-label>
-                            <x-input id="course" type="text" name="name" required></x-input>
+                            <x-input id="course" type="text" name="name" required class="w-full rounded"></x-input>
 
                             <div class="flex items-center justify-end mt-4">
                             <x-button class="ml-3">
@@ -97,21 +98,32 @@
                         <h2 class="text-left mb-2 font-bold">Delete Course(s)</h2>
                         <form action="{{route("deleteCourse")}}" method="POST">
                             @csrf
-                            @foreach($courses as $course)
-{{--                                <div class="">--}}
-                                <x-button class="text-white font-bold 2xl bg-red-700" value="{{$course->id}}">DELETE {{$course->name}}</x-button>
-{{--                                </div>--}}
-                            @endforeach
+                            <table class="text-center mx-auto">
+                                <thead>
+                                <th>Course</th>
+                                <th>Delete</th>
+                                </thead>
+                                <tbody>
+                                @foreach($courses as $course)
+                                    {{--                                <div class="">--}}
+                                    <tr>
+                                        <td class="py-2 px-12 border-b-2 border-gray-300">{{$course->name}}</td>
+                                        <td class="py-2 px-12 border-b-2 border-gray-300 "><x-button class="text-white font-bold 2xl bg-red-700" value="{{$course->id}}" name="deleteCourse">DELETE</x-button></td>
+                                    </tr>
+                                    {{--                                </div>--}}
+                                @endforeach
+                                </tbody>
+                            </table>
                         </form>
 
                         <h2 class="text-left mb-2 font-bold">Create a new Field of Study</h2>
                         <form action="{{route("addFieldOfStudy")}}" method="POST">
                             @csrf
                             <x-label for="fosName" value="Name of the new field of study"></x-label>
-                            <x-input type="text" name="fosName" id="fosName" required></x-input>
+                            <x-input type="text" name="fosName" id="fosName" class="w-full rounded" required></x-input>
 
                             <x-label for="fosYear" value="The year of the new field of study"></x-label>
-                            <x-input type="number" name="fosYear" id="fosYear" max="7" min="1" required></x-input>
+                            <x-input type="text" name="fosYear" id="fosYear" class="w-full rounded" required></x-input>
 
                             <div class="flex items-center justify-end mt-4">
                                 <x-button class="ml-3">
@@ -135,7 +147,7 @@
                                         <tr>
                                             <td class="py-2 px-12 border-b-2 border-gray-300">{{$fos->year}}</td>
                                             <td class="py-2 px-12 border-b-2 border-gray-300">{{$fos->name}}</td>
-                                            <td class="py-2 px-12 border-b-2 border-gray-300"><x-button class="text-white font-bold 2xl bg-red-700" value="{{$fos->id}}" name="deleteUser">Delete</x-button></td>
+                                            <td class="py-2 px-12 border-b-2 border-gray-300"><x-button class="text-white font-bold 2xl bg-red-700" value="{{$fos->id}}" name="deleteFos">Delete</x-button></td>
                                         </tr>
                                     @endforeach
                                     </tbody>

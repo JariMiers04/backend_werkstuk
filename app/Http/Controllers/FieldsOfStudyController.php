@@ -15,13 +15,28 @@ public function getFieldOfStudy(){
 
     // create new Field of Study
      public function addFieldOfStudy(Request $request){
-    $request = FieldsOfStudy::create([
 
+    $request->validate([
+        "fosName"=> 'required|string|max:100',
+        "fosYear" => "required|integer|min:1|max:7"
     ]);
+
+    FieldsOfStudy::create([
+        "name" => $request->fosName,
+        "year" => $request->fosYear
+    ]);
+
+    return redirect()->route("getCourses");
+
      }
 
     // delete field of Study
     public function deleteFieldOfStudy(Request $request){
+
+    $deleteFos = $request->deleteFos;
+    FieldsOfStudy::find($deleteFos)->delete();
+
+    return redirect()->route("getCourses");
     }
 
 //    update

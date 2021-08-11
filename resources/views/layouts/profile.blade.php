@@ -23,7 +23,7 @@
                                 </div>
                                 <div>
                                     <x-label for="email" value="Email"></x-label>
-                                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" value="{{ Auth::user()->email}}"></x-input>
+                                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" readonly value="{{ Auth::user()->email}}"></x-input>
                                 </div>
                             </div>
                             <div class="grid grid-rows-2 gap-6">
@@ -48,25 +48,40 @@
 
                     <form action="{{route("updateNonAvailabilities")}}" method="POST">
                         @csrf
-                        <table class="mx-auto">
+                        <table>
                             <thead>
-                            @foreach($days as $day)
-                            <th class="px-8">{{$day->name}}</th>
-                            </thead>
-                            @endforeach
-                            <tbody>
-{{--                            @for($i=0; i<8; $i++)--}}
-                                <tr class="allign-center">
-                                    <td class="py-2 px-12 border-b-2 border-gray-300"></td>
-                                    <td class="py-2 px-12 border-b-2 border-gray-300"></td>
-                                    <td class="py-2 px-12 border-b-2 border-gray-300"></td>
-                                    <td class="py-2 px-12 border-b-2 border-gray-300"></td>
-                                    <td class="py-2 px-12 border-b-2 border-gray-300"></td>
-                                </tr>
+                            <tr>
 
-{{--                            @endfor--}}
+{{--                            @foreach($days as $day)--}}
+    <th></th>
+                                <th class="px-8">Monday</th>
+                                <th class="px-8">Dinsdag</th>
+                                <th class="px-8">Woensdag</th>
+                                <th class="px-8">Donderdag</th>
+                                <th class="px-8">Vrijdag</th>
+                                </tr>
+                            </thead>
+{{--                            @endforeach--}}
+                            <tbody>
+                            @for($i=0; $i<8; $i++)
+<tr class="align-middle">
+    <td><h2> Time Block {{$i}}</h2></td>
+    @foreach($days as $day)
+        <td class="py-2 px-12 border-b-2 border-gray-100"><input type="checkbox"
+                                                                 class="mx-6 rounded"
+                                                                 name="availabilities[]"
+                                                                 value="{{$day->id}}-{{$i}}"/>
+        </td>
+@endforeach
+
+                            @endfor
                             </tbody>
                         </table>
+                        <div class="flex items-center justify-end mt-4">
+                        <x-button class="ml-3">
+                            {{__("Save")}}
+                        </x-button>
+                        </div>
                     </form>
                 </div>
             </div>

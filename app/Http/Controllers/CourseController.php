@@ -35,7 +35,7 @@ class CourseController extends Controller
            'name' => $request->name
         ]);
 
-        return redirect()->route("courses");
+        return redirect()->route("getCourses");
     }
 
     // update a course -> change amount of houres?
@@ -56,7 +56,9 @@ class CourseController extends Controller
 
     public function deleteCourse(Request $request){
 
+        $deleteCourseId = $request->deleteCourse;
+        $course = Course::find($deleteCourseId)->delete();
 
-        return redirect()->route('courses');
+        return redirect()->route('getCourses');
     }
 }

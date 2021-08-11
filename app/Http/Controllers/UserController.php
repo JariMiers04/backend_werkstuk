@@ -75,12 +75,14 @@ class UserController extends Controller
 public function deleteUser(Request $request){
 
     $deleteUserId = $request->deleteUser;
-    $user = User::find($deleteUserId)->delete();
+    User::find($deleteUserId)->delete();
 
     return redirect()->route("getUser");
 }
 
 //  update nonAvailabilities
+
+// credits Wouter Heirstrate om dit uit te leggen inclusief de blade hiervoor
 
 public function updateNonAvailabilities(Request $request){
 
