@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use function GuzzleHttp\Promise\all;
 
@@ -46,7 +47,9 @@ class UserController extends Controller
 //    Update an User
 
     public function updateUser(Request $request){
-        $password = $request->password;
+        $user = User::findOrFail($request->id);
+
+        $password = $request->new_password;
 
 //        input password validation
         if($password == ""){
@@ -56,10 +59,13 @@ class UserController extends Controller
         } else{
             $request->validate([
                 "name" => "required|string|max:25",
-                "password" =>  "required|string|min:8|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/|
-               confirmed"
+                "new_password" =>  "required|string|min:8|confirmed"
+//                    |regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/|
             ]);
         }
+
+        $user->password = $password;
+        $user->save();
 
         return redirect()->route('profile');
     }
@@ -67,18 +73,18 @@ class UserController extends Controller
 //    delete user
 
 public function deleteUser(Request $request){
-    $deleteUserId = $request->idkyet;
-    $user = User::find($deleteUserId);
 
-//    verder afwerken
+    $deleteUserId = $request->deleteUser;
+    $user = User::find($deleteUserId)->delete();
 
-
-    return redirect()->route("users", ["users" => User::all()]);
+    return redirect()->route("getUser");
 }
 
 //  update nonAvailabilities
 
 public function updateNonAvailabilities(Request $request){
+
+
 
         return redirect()->route("profile");
 }

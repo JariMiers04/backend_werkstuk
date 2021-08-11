@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
         $adminRole->givePermissionTo($manageAllData);
         $teacherRole->givePermissionTo($manageOwnData);
 
-//        linken met bestaande users -> credit to Wouter hiervoor
+//        linken met bestaande users -> credit to Wouter hiervoor -> werkt niet
         User::find(1)->assignRole("admin");
         User::find(2)->assingRole("teacher");
 

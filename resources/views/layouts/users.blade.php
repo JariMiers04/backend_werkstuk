@@ -24,9 +24,9 @@
                         <td class="py-2 px-12 border-b-2 border-gray-300">{{$user->email}}</td>
 
                             @can("manageAllData")
-                                <form action="deleteUser" method="POST">
+                                <form action="{{route("deleteUser")}}" method="POST">
                                     @csrf
-                                    <td class="py-2 px-12 border-b-2 border-gray-300"><x-button class="text-white font-bold 2xl bg-red-700" value="{{$user->id}}">Delete</x-button></td>
+                                    <td class="py-2 px-12 border-b-2 border-gray-300"><x-button class="text-white font-bold 2xl bg-red-700" value="{{$user->id}}" name="deleteUser">Delete</x-button></td>
                                 </form>
                             @endcan
                         @endforeach

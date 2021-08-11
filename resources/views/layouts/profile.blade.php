@@ -16,6 +16,7 @@
                         @csrf
                         <div class="grid grid-cols-2 gap-6">
                             <div class="grid grid-rows-2 gap-6">
+                                <input type="hidden" name="id" value="{{ Auth::user()->id}}">
                                 <div>
                                 <x-label for="name" value="Your name"></x-label>
                                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ Auth::user()->name}}"></x-input>
@@ -31,8 +32,8 @@
                                     <x-input id="new_password" class="block mt-1 w-full" type="password" name="new_password"></x-input>
                                 </div>
                                 <div>
-                                    <x-label for="confirm_password" value="Confirm password"></x-label>
-                                    <x-input id="confirm_password" class="block mt-1 w-full" type="password" name="confirm_password"></x-input>
+                                    <x-label for="new_password_confirmation" value="Confirm password"></x-label>
+                                    <x-input id="new_password_confirmation" class="block mt-1 w-full" type="password" name="new_password_confirmation"></x-input>
                                 </div>
                             </div>
                         </div>
@@ -50,11 +51,11 @@
                         <table class="mx-auto">
                             <thead>
                             @foreach($days as $day)
-                            <th class="px-12">{{$day->name}}</th>
+                            <th class="px-8">{{$day->name}}</th>
                             </thead>
                             @endforeach
                             <tbody>
-                            @for($i=0; i<8; $i++)
+{{--                            @for($i=0; i<8; $i++)--}}
                                 <tr class="allign-center">
                                     <td class="py-2 px-12 border-b-2 border-gray-300"></td>
                                     <td class="py-2 px-12 border-b-2 border-gray-300"></td>
@@ -63,7 +64,7 @@
                                     <td class="py-2 px-12 border-b-2 border-gray-300"></td>
                                 </tr>
 
-                            @endfor
+{{--                            @endfor--}}
                             </tbody>
                         </table>
                     </form>
