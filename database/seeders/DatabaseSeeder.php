@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             DaySeeder::class,
             CourseSeeder::class,
             FieldOfStudySeeder::class,
-            UserSeeder::class,
-            BlockSeeder::class
+            BlockSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

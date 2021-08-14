@@ -60,8 +60,8 @@ class UserSeeder extends Seeder
         $teacherRole->givePermissionTo($manageOwnData);
 
 //        linken met bestaande users -> credit to Wouter hiervoor -> werkt niet
-        User::find(1)->assignRole("admin");
-        User::find(2)->assingRole("teacher");
+        User::find(1)->assignRole($adminRole);
+        User::find(2)->assingRole($teacherRole);
 
     }
 }

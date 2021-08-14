@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Block;
+use App\Models\Course;
 use App\Models\CoursesFos;
+use App\Models\Day;
+use App\Models\FieldsOfStudy;
 use App\Models\Room;
+use App\Models\Time;
 use App\Rules\BlockRoomAvailabilityRule;
 use App\Rules\BlockUserAvailabilityRule;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
@@ -15,48 +20,49 @@ class BlockController extends Controller
     // read the blocks
 
     public function getBlocks(){
-        $block = Block::all();
+        $blocks = Block::all();
+        $days = Day::all();
+        $times = Time::all();
+
+        return view("layouts/dashboard", ['blocks' => $blocks, 'days' => $days, "times"=>$times]);
     }
 
     // add a block
 
-    public function addBlock(Request $request, Permission $permission){
+    public function addBlock(Request $request){
 
         $request->validate([
-            "room" => new BlockRoomAvailabilityRule(),
-            "users"=> new BlockUserAvailabilityRule(),
+            "room" => new BlockRoomAvailabilityRule($request->days),
+            "users"=> new BlockUserAvailabilityRule($request->days),
+            "days" => "required|string",
             "times" => "required|integer|min:1|max:7",
-            "year" => "required|integer|min:2021",
+            "fieldsOfStudyYear" => "required|integer",
         ]);
 
-        $permission = new Permission;
+        $user = \App\Models\User::find($request->users);
+        $fieldOfStudy = FieldsOfStudy::find($request->fieldsOfStudy);
+        $course = Course::find($request->courses);
+        $year = $request->fieldsOfStudyYear;
+        $day = Day::find($request->days);
+        $room = Room::all();
+        $time = Time::find($request->times);
 
-//        $times = $request->times;
-//        $year = $request->fieldsOfStudyYear;
-        $block = Block::create([
 
-//            $permission->users = $request->users,
-//            $permission->times = $request->times,
-//            $permission->days = $request->days,
-//            $permission->year = $request->users,
-//            $permission->room = new Room(),
-//            $permission
-            "users" => $request->users,
-            "times" => $request->times,
-            "days" => $request->days,
-            "rooms" => new Room(),
-            "courses_fos" => new CoursesFos()
+        $coursesFos = CoursesFos::firstOrCreate([
+            "course_id" => $course->id,
+            "fields_of_study_id" =>$fieldOfStudy->id
         ]);
 
-        $permission->save();
+        $block = new Block();
+        $block->user()->associate($user);
+        $block->coursesFos()->associate($coursesFos);
+        $block->day()->associate($day);
+        $block->time()->associate($time);
+        $block->room()->associate(Room::create());
+        $block->year = $year;
+
         $block->save();
 
-        return redirect()->route("timetable");
+        return redirect()->route("dashboard");
     }
-
-//    // delete a block
-//
-//    public function deleteBlock(Request $request){
-//
-//    }
 }

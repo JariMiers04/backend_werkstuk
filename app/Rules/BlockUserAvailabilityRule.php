@@ -12,9 +12,9 @@ class BlockUserAvailabilityRule implements Rule
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($day_id)
     {
-        //
+        $this->day_id = $day_id;
     }
 
     /**
@@ -36,6 +36,7 @@ class BlockUserAvailabilityRule implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+
+        return 'This room is not available for this day: '. $this->day_id;
     }
 }

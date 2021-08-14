@@ -9,6 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                    @cannot('manageAllData')
+                        <h2 class="text-left mb-2 font-bold">You do not have acces to this page.</h2>
+                    @endcannot
                     @can('manageAllData')
                         <x-auth-validation-errors class="mb-4" :errors="$errors"/>
                     <h2 class="text-left mb-2 font-bold">Add a new Timeblock</h2>
@@ -20,7 +23,7 @@
                                         <x-label for="users" value="Select Teacher"></x-label>
                                         <select name="users" id="users" value="" class="w-full rounded">
                                         @foreach($users as $user)
-                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                            <option @if (old('users') == $user->id) selected="selected" @endif value="{{$user->id}}">{{$user->name}}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -29,7 +32,7 @@
                                     <x-label for="fieldsOfStudy" value="Select Field of Study"></x-label>
                                     <select name="fieldsOfStudy" id="fieldsOfStudy" value="" class="w-full rounded">
                                     @foreach($fieldOfStudy as $fos)
-                                        <option value="{{$fos->id}}">{{$fos->name}}</option>
+                                        <option @if (old('fieldsOfStudy') == $fos->id) selected="selected" @endif value="{{$fos->id}}">{{$fos->name}} </option>
                                     @endforeach
                                     </select>
                                 </div>
@@ -38,7 +41,7 @@
                                     <x-label for="fieldsOfStudyYear" value="Select year of field of study"></x-label>
                                     <select name="fieldsOfStudyYear" id="fieldsOfStudyYear" value="" class="w-full rounded">
                                         @for($i=1;$i<=7;$i++)
-                                            <option value="{{$i}}">Year {{$i}}</option>
+                                            <option @if (old('fieldsOfStudyYear') == $i) selected="selected" @endif value="{{$i}}">Year {{$i}}</option>
                                         @endfor
                                     </select>
                                 </div>
@@ -47,7 +50,7 @@
                                     <x-label for="courses" value="Select Course"></x-label>
                                     <select name="courses" id="courses" value="" class="w-full rounded">
                                     @foreach($courses as $course)
-                                        <option value="{{$course->id}}">{{$course->name}}</option>
+                                        <option @if (old('courses') == $course->id) selected="selected" @endif value="{{$course->id}}">{{$course->name}}</option>
                                     @endforeach
                                     </select>
                                 </div>
@@ -56,7 +59,7 @@
                                     <x-label for="days" value="Select Day"></x-label>
                                     <select name="days" id="days" value="" class="w-full rounded">
                                     @foreach($days as $day)
-                                        <option value="{{$day->id}}">{{$day->name}}</option>
+                                        <option @if (old('days') == $day->id) selected="selected" @endif value="{{$day->id}}">{{$day->name}}</option>
                                     @endforeach
                                     </select>
                                 </div>
@@ -66,15 +69,11 @@
                                     <select name="times" id="times" value="" class="w-full rounded">
 {{--                                    @for($i=1;$i<=8;$i++)--}}
                                         @foreach($times as $time)
-                                        <option value="{{$time->id}}">Class Block {{$time->id}}</option>
+                                        <option @if (old('times') == $time->id) selected="selected" @endif value="{{$time->id}}">Class Block {{$time->id}}</option>
                                             @endforeach
 {{--                                    @endfor--}}
                                     </select>
                                 </div>
-                                <div>
-                                <x-label for="year" value="Year"></x-label>
-                                <x-input id="year" type="integer" name="year" class="w-full rounded"></x-input>
-                                 </div>
                                 <div class="flex items-center justify-end mt-4">
                             <x-button class="ml-3">
                                 {{__("Create new block")}}

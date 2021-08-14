@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Room;
 use Illuminate\Database\Seeder;
 
 class BlockSeeder extends Seeder
@@ -13,6 +14,8 @@ class BlockSeeder extends Seeder
      */
     public function run()
     {
-        //
+//        $rooms = Room::factory()
+//            ->count(50)
+//            ->create();
     }
 }

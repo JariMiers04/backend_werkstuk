@@ -14,7 +14,9 @@
                         <th>ID</th>
                         <th>NAME</th>
                         <th>EMAIL</th>
+                        @can("manageAllData")
                         <th>DELETE</th>
+                        @endcan
                         </thead>
                         <tbody>
                         @foreach($users as $user)

@@ -48,7 +48,7 @@
 
                     <form action="{{route("updateNonAvailabilities")}}" method="POST">
                         @csrf
-                        <table>
+                        <table class="mx-auto">
                             <thead>
                             <tr>
 
@@ -63,12 +63,19 @@
                             </thead>
 {{--                            @endforeach--}}
                             <tbody>
-                            @for($i=0; $i<8; $i++)
+                            @for($i=1; $i<=8; $i++)
 <tr class="align-middle">
     <td><h2> Time Block {{$i}}</h2></td>
     @foreach($days as $day)
         <td class="py-2 px-12 border-b-2 border-gray-100"><input type="checkbox"
-                                                                 class="mx-6 rounded"
+                                                                 class="mx-6"
+                                                                 @if($nonAvailabilities != null)
+                                                                 @foreach($nonAvailabilities as $nonav)
+                                                                 @if($nonav->day_id == $day->id && $nonav->time_id == $i)
+                                                                 checked
+                                                                 @endif
+                                                                 @endforeach
+                                                                 @endif
                                                                  name="availabilities[]"
                                                                  value="{{$day->id}}-{{$i}}"/>
         </td>
@@ -79,7 +86,7 @@
                         </table>
                         <div class="flex items-center justify-end mt-4">
                         <x-button class="ml-3">
-                            {{__("Save")}}
+                            {{__("LAZY BASTARD")}}
                         </x-button>
                         </div>
                     </form>

@@ -7,6 +7,10 @@
         </x-slot>
 
         <!-- Validation Errors -->
+        @cannot('manageAllData')
+            <h2 class="text-left mb-2 font-bold">You do not have acces to this page.</h2>
+            <a class="underline" href="{{route("dashboard")}}"> GO BACK TO HOME</a>
+        @endcannot
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
         @can("manageAllData")
 
@@ -56,6 +60,7 @@
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
                 </a>
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{route("dashboard")}}"> GO BACK TO HOME</a>
 
                 <x-button class="ml-4">
                     {{ __('Register') }}

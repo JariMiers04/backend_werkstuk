@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Day;
+use App\Models\NonAvailability;
+use App\Models\Time;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +41,7 @@ class UserController extends Controller
         ]);
 
 //        check if new user is an admin
-        $request->has("adminUser") ? $user->assignRole("admin") : $user->assignRole("teacher");
+        $request->has("userAdmin") ? $user->assignRole("admin") : $user->assignRole("teacher");
 
         return redirect()->route("getUser");
     }
@@ -49,7 +52,7 @@ class UserController extends Controller
     public function updateUser(Request $request){
         $user = User::findOrFail($request->id);
 
-        $password = $request->new_password;
+        $password = Hash::make($request->new_password);
 
 //        input password validation
         if($password == ""){
@@ -86,9 +89,34 @@ public function deleteUser(Request $request){
 
 public function updateNonAvailabilities(Request $request){
 
+        $arrayCheckbox = $request->availabilities;
+
+        $user= Auth::user();
+        $user->nonAvailability()->delete();
+
+        if($arrayCheckbox !=null){
+            foreach ($arrayCheckbox as $checkbox){
+                $dayId = explode('-',$checkbox)[0];
+                $timeId = explode('-',$checkbox)[1];
+                $day = Day::find($dayId);
+                $time = Time::find($timeId);
+
+                $nonav = NonAvailability::FirstOrCreate(
+                    ['day_id'=> $day->id,'time_id'=>$time->id, 'user_id'=>$user->id]);
+/*
+//                new nonavailability
+                $nonav = new NonAvailability();
+                $nonav->day()->associate($day);
+                $nonav->time()->associate($time);
+                $nonav->user()->associate($user);
+
+                $nonav->save();*/
+            }
+        }
 
 
-        return redirect()->route("profile");
+
+        return redirect()->route("profile", ['days'=>Day::all(), "nonAvailabilities" => $user->nonAvailability]);
 }
 
 

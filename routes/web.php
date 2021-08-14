@@ -22,16 +22,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('layouts/dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-
 //Route for the  admin visualization of the timetables and profile
 //
 Route::group(['middleware' => 'auth'], function () {
 //    showing so getting we need to call the get function in de controller class -> https://laravel.com/docs/8.x/controllers#controller-middleware
-    Route::get('/timetable', [BlockController::class, 'getBlocks'])->name('timetable');
+    Route::get('/dashboard', [BlockController::class, 'getBlocks'])->name('dashboard');
 
 //   add a block
     Route::post("/addBlock", [BlockController::class, 'addBlock'])->name("addBlock");
